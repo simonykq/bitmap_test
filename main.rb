@@ -1,3 +1,5 @@
+require 'bitmap'
+
 loop do
 	printf '> '
 	inputs = gets.chomp
