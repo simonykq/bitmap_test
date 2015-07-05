@@ -6,7 +6,7 @@ class Bitmap
     def initialize m, n, color
     	raise "Invalid co-ordinate inputs" unless is_valid?(m, n)
     	@cols, @rows = [m, n]
-    	@coordinates = Array.new(@rows){ Array.new(@cols) { 'O' } }
+    	@coordinates = Array.new(@cols){ Array.new(@rows) { 'O' } }
     end	
 
     def self.new m=250, n=250,color='O'
@@ -14,16 +14,16 @@ class Bitmap
     end	
 
     def C color='O'
-    	@coordinates.each do |row|
-    		row.each do |cell|
+    	@coordinates.each do |column|
+    		column.each do |cell|
  				cell = color
     		end	
     	end	
     end	
 
     def L x, y, color
-    	raise "Index out of bound" unless x.between?(0, @rows-1) && y.between?(0, @columns-1)
-    	@coordinates[x][y] = color
+    	raise "Index out of bound" unless x.between?(1, @cols) && y.between?(1, @rows)
+    	@coordinates[x-1][y-1] = color
     end		
 
 	private
