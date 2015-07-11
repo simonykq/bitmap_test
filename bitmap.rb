@@ -10,7 +10,7 @@ class Bitmap
     end 
 
     def self.new m=250, n=250,color='O'
-        super m, n, color
+        super m.to_i, n.to_i, color
     end 
 
     def C color='O'
@@ -22,11 +22,13 @@ class Bitmap
     end 
 
     def L x=0, y=0, color='O'
+        x, y = [x.to_i, y.to_i]
         return unless x.between?(1, @cols) && y.between?(1, @rows)
         @coordinates[x-1][y-1] = color
     end 
 
     def V x=0, y_1=0, y_2=0, color='O'
+        x, y_1, y_2 = [x.to_i, y_1.to_i, y_2.to_i]
         return unless x.between?(1, @cols) && [y_1, y_2].all?{|num| num.between? 1, @rows }
         range = y_2 >= y_1 ? y_1..y_2 : y_2..y_1
         for i in range do
@@ -35,6 +37,7 @@ class Bitmap
     end 
 
     def H x_1=0, x_2=0, y=0, color='O'
+        x_1, x_2, y = [x_1.to_i, x_2.to_i, y.to_i]
         return unless [x_1, x_2].all?{|num| num.between? 1, @cols } && y.between?(1, @rows)
         range = x_2 > x_1 ? x_1..x_2 : x2..x_1
         for i in range do
@@ -43,14 +46,15 @@ class Bitmap
     end 
 
     def F x=0, y=0, color='O'
+        x, y = [x.to_i, y.to_i]
         target_color = @coordinates[x-1][y-1]
         flood_fill x, y, target_color, color
     end 
 
     def S
-        for i in 0...@rows do
-            for j in 0...@cols do
-                printf @coordinates[i][j]
+        for y in 1..@rows do
+            for x in 1..@cols do
+                printf @coordinates[x-1][y-1]
             end  
             printf "\n"  
         end 
@@ -58,13 +62,13 @@ class Bitmap
 
     private
 
-    def is_valid? m, m
+    def is_valid? m, n
         m_n = [m, n]
         m_n.all? {|num| num.is_a? Integer } && m_n.all? {|num| num.between? 1, 250 }
     end 
 
     def flood_fill x, y, target_color, replace_color
-        return unless x.between(1, @cols) && y.between(1, @rows)
+        return unless x.between?(1, @cols) && y.between?(1, @rows)
         return if @coordinates[x-1][y-1] != target_color
         return if @coordinates[x-1][y-1] == replace_color
         @coordinates[x-1][y-1] = replace_color
