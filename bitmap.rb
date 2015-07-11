@@ -47,6 +47,15 @@ class Bitmap
         flood_fill x, y, target_color, color
     end 
 
+    def S
+        for i in 0...@rows do
+            for j in 0...@cols do
+                printf @coordinates[i][j]
+            end  
+            printf "\n"  
+        end 
+    end    
+
     private
 
     def is_valid? m, m
