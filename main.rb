@@ -1,4 +1,5 @@
-require './bitmap'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'lib/bitmap'
 
 loop do
 	printf '> '
