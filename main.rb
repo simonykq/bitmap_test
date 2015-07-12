@@ -1,4 +1,3 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'lib/bitmap'
 
 loop do
@@ -8,7 +7,10 @@ loop do
 	case command
 	when 'I'
 		begin
+			m_n = params.take(2).map{|n| n.to_i }
+	        params = m_n + params.drop(2)
 			@bitmap = Bitmap.new *params
+			puts "Bitmap initialized"
 		rescue => e
 			puts e.message
 			puts e.backtrace.join("\n")
@@ -18,6 +20,11 @@ loop do
 			puts "Bitmap not initialized. Please use I command to initialize bitmap first"
 		else
 			begin
+				unless params.empty?
+					last = params.pop
+					params = params.map{|n| n.to_i }
+					params << last
+				end
 				@bitmap.send command, *params
 			rescue => e
 				puts e.message
