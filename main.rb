@@ -11,8 +11,11 @@ loop do
 	        params = m_n + params.drop(2)
 			@bitmap = Bitmap.new *params
 			puts "Bitmap initialized"
-		rescue => e
+		rescue Bitmap::InvalidInputError => e
 			puts e.message
+			puts "Please type a valid input again"
+		rescue => e
+		    puts e.message	
 			puts e.backtrace.join("\n")
 		end	
 	when 'C', 'L', 'V', 'H', 'F', 'S'
@@ -26,8 +29,11 @@ loop do
 					params << last
 				end
 				@bitmap.send command, *params
-			rescue => e
+			rescue Bitmap::InvalidInputError => e
 				puts e.message
+				puts "Please type a valid input again"
+			rescue => e
+			    puts e.message	
 				puts e.backtrace.join("\n")
 			end		
 		end		

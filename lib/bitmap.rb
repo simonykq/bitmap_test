@@ -3,8 +3,12 @@ class Bitmap
     attr_accessor :rows, :cols
     attr_accessor :coordinates
 
+
+    class InvalidInputError < StandardError  
+    end 
+
     def initialize m, n, color
-        raise "Invalid column or row numbers" unless is_valid_integer_between?(1, 250, m, n)
+        raise InvalidInputError, "Columns and rows number must be a valid integer between 1 and 250" unless is_valid_integer_between?(1, 250, m, n)
         @cols, @rows = [m, n]
         @coordinates = Array.new(@cols){ Array.new(@rows) { 'O' } }
     end 
@@ -51,17 +55,17 @@ class Bitmap
             end  
             printf "\n"  
         end 
-    end    
+    end   
 
     private
 
     def set_pixel x, y, color
-        raise "Invalid x or y inputs" unless is_valid_integer_between?(1, @cols, x) && is_valid_integer_between?(1, @rows, y)
+        raise InvalidInputError, "Column index X must be between 1 and #{@cols} and row index Y must be between 1 and #{@rows}" unless is_valid_integer_between?(1, @cols, x) && is_valid_integer_between?(1, @rows, y)
         @coordinates[x-1][y-1] = color
     end 
 
     def get_pixel x, y
-        raise "Invalid x or y inputs" unless is_valid_integer_between?(1, @cols, x) && is_valid_integer_between?(1, @rows, y)
+        raise InvalidInputError, "Column index X must be between 1 and #{@cols} and row index Y must be between 1 and #{@rows}" unless is_valid_integer_between?(1, @cols, x) && is_valid_integer_between?(1, @rows, y)
         @coordinates[x-1][y-1]
     end 
 
@@ -79,7 +83,7 @@ class Bitmap
             flood_fill x+1, y, target_color, replace_color
             flood_fill x, y-1, target_color, replace_color
             flood_fill x, y+1, target_color, replace_color
-        rescue
+        rescue InvalidInputError
             return
         end    
     end 
