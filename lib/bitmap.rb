@@ -21,7 +21,7 @@ class Bitmap
             for x in 1..@cols do
                 current_pixel = get_pixel x, y
                 set_pixel x, y, color
-                sequences << {x: x, y:, color: current_pixel}
+                sequences << {x: x, y: y, color: current_pixel}
             end    
         end
         @revert_stack << {sequences: sequences}    
@@ -37,9 +37,9 @@ class Bitmap
         range = y_2 >= y_1 ? y_1..y_2 : y_2..y_1
         sequences = []
         for i in range do
-            current_pixel = get_pixel x, y
+            current_pixel = get_pixel x, i
             set_pixel x, i, color
-            sequences << {x: x, y: y, color: current_pixel}
+            sequences << {x: x, y: i, color: current_pixel}
         end
         @revert_stack << {sequences: sequences}     
     end 
@@ -48,9 +48,9 @@ class Bitmap
         range = x_2 > x_1 ? x_1..x_2 : x2..x_1
         sequences = []
         for i in range do
-            current_pixel = get_pixel x, y
+            current_pixel = get_pixel i, y
             set_pixel i, y, color
-            sequences << {x: x, y: y, color: current_pixel}
+            sequences << {x: i, y: y, color: current_pixel}
         end
         @revert_stack << {sequences: sequences} 
     end 
