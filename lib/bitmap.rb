@@ -6,8 +6,8 @@ class Bitmap
     def initialize m, n, color
         raise InvalidInputError, "Columns and rows number must be a valid integer between 1 and 250" unless is_valid_integer_between?(1, 250, m, n)
         @cols, @rows = [m, n]    
-        @revert_queue = []
-        @forward_queue = []
+        @revert_stack = []
+        @forward_stack = []
         @coordinates = Array.new(@cols){ Array.new(@rows) { 'O' } }
     end 
 
@@ -16,34 +16,49 @@ class Bitmap
     end 
 
     def C color='O'
+        actions = []
         for y in 1..@rows do
             for x in 1..@cols do
+                current_pixel = get_pixel x, y
                 set_pixel x, y, color
+                actions << {x: x, y:, color: current_pixel}
             end    
-        end    
+        end
+        @revert_stack << actions    
     end 
 
     def L x, y, color='O'
+        current_pixel = get_pixel x, y 
         set_pixel x, y, color
+        @revert_stack << [{x: x, y: y, color: current_pixel}]
     end 
 
     def V x, y_1, y_2, color='O'
         range = y_2 >= y_1 ? y_1..y_2 : y_2..y_1
+        actions = []
         for i in range do
+            current_pixel = get_pixel x, y
             set_pixel x, i, color
-        end     
+            actions << {x: x, y: y, color: current_pixel}
+        end
+        @revert_stack << actions     
     end 
 
     def H x_1, x_2, y, color='O'
         range = x_2 > x_1 ? x_1..x_2 : x2..x_1
+        actions = []
         for i in range do
+            current_pixel = get_pixel x, y
             set_pixel i, y, color
-        end 
+            actions << {x: x, y: y, color: current_pixel}
+        end
+        @revert_stack << actions 
     end 
 
     def F x, y, color='O'
         target_color = get_pixel x, y
         flood_fill x, y, target_color, color
+        @revert_stack << [{x: x, y: y, color: target_color, flood_fill: true}]
     end 
 
     def S
