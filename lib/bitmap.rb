@@ -16,49 +16,49 @@ class Bitmap
     end 
 
     def C color='O'
-        actions = []
+        sequences = []
         for y in 1..@rows do
             for x in 1..@cols do
                 current_pixel = get_pixel x, y
                 set_pixel x, y, color
-                actions << {x: x, y:, color: current_pixel}
+                sequences << {x: x, y:, color: current_pixel}
             end    
         end
-        @revert_stack << actions    
+        @revert_stack << {sequences: sequences}    
     end 
 
     def L x, y, color='O'
         current_pixel = get_pixel x, y 
         set_pixel x, y, color
-        @revert_stack << [{x: x, y: y, color: current_pixel}]
+        @revert_stack << {sequences: [{x: x, y: y, color: current_pixel}]}
     end 
 
     def V x, y_1, y_2, color='O'
         range = y_2 >= y_1 ? y_1..y_2 : y_2..y_1
-        actions = []
+        sequences = []
         for i in range do
             current_pixel = get_pixel x, y
             set_pixel x, i, color
-            actions << {x: x, y: y, color: current_pixel}
+            sequences << {x: x, y: y, color: current_pixel}
         end
-        @revert_stack << actions     
+        @revert_stack << {sequences: sequences}     
     end 
 
     def H x_1, x_2, y, color='O'
         range = x_2 > x_1 ? x_1..x_2 : x2..x_1
-        actions = []
+        sequences = []
         for i in range do
             current_pixel = get_pixel x, y
             set_pixel i, y, color
-            actions << {x: x, y: y, color: current_pixel}
+            sequences << {x: x, y: y, color: current_pixel}
         end
-        @revert_stack << actions 
+        @revert_stack << {sequences: sequences} 
     end 
 
     def F x, y, color='O'
         target_color = get_pixel x, y
         flood_fill x, y, target_color, color
-        @revert_stack << [{x: x, y: y, color: target_color, flood_fill: true}]
+        @revert_stack << {sequences: [{x: x, y: y, color: target_color}], flood_fill: true}
     end 
 
     def S
