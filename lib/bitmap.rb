@@ -1,15 +1,13 @@
 class Bitmap
 
-    attr_accessor :rows, :cols
-    attr_accessor :coordinates
-
-
     class InvalidInputError < StandardError  
     end 
 
     def initialize m, n, color
         raise InvalidInputError, "Columns and rows number must be a valid integer between 1 and 250" unless is_valid_integer_between?(1, 250, m, n)
-        @cols, @rows = [m, n]
+        @cols, @rows = [m, n]    
+        @revert_queue = []
+        @forward_queue = []
         @coordinates = Array.new(@cols){ Array.new(@rows) { 'O' } }
     end 
 
