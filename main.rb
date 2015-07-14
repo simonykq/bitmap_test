@@ -1,5 +1,6 @@
 require 'lib/bitmap'
 
+puts "Hello, This is Simon Yu. I hope you will like the solution I provided. Enjoy it!"
 loop do
 	printf '> '
 	inputs = gets.chomp
