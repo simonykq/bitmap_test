@@ -10,7 +10,7 @@ chmod +x bin/run
 ```
 Then, run the file as system command:
 ```
-./run
+./bin/run
 ```
 
 # Run the tests
