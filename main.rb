@@ -18,7 +18,7 @@ loop do
 		    puts e.message	
 			puts e.backtrace.join("\n")
 		end	
-	when 'C', 'L', 'V', 'H', 'F', 'S'
+	when 'C', 'L', 'V', 'H', 'F', 'S', 'R', '_R'
 		if !@bitmap
 			puts "Bitmap not initialized. Please use I command to initialize bitmap first"
 		else
@@ -28,6 +28,9 @@ loop do
 					params = params.map{|n| n.to_i }
 					params << last
 				end
+				if command == 'R' || command == '_R'
+					params = params.map{|n| n.to_i }
+				end	
 				@bitmap.send command, *params
 			rescue Bitmap::InvalidInputError => e
 				puts e.message
@@ -36,7 +39,7 @@ loop do
 			    puts e.message	
 				puts e.backtrace.join("\n")
 			end		
-		end		
+		end					
 	when 'X', 'exit'
 		puts "Bye bye!"
 		break
