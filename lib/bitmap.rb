@@ -1,4 +1,7 @@
+require_relative './bitmap_revert'
+
 class Bitmap
+    include Revertable
 
     class InvalidInputError < StandardError  
     end 
