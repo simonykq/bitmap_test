@@ -24,9 +24,23 @@ Once the bitmap has been initialized and some commands have been run, you can ty
 ```
 > I 5 6
 > L 2 3 A
+> S
+OOOOO
+OOOOO
+OAOOO
+OOOOO
+OOOOO
+OOOOO
 > F 3 3 J
 > V 2 3 4 W
 > H 3 4 2 Z
+> S
+JJJJJ
+JJZZJ
+JWJJJ
+JWJJJ
+JJJJJ
+JJJJJ
 > R 3
 > S
 OOOOO
